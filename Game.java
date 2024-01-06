@@ -1,19 +1,46 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Klasa modelujaca stan rozgrwki
+ */
 abstract class GameState {
     protected Game game;
 
+    /**
+     * Konstruktor klasy GameState
+     * @param game
+     */
     public GameState(Game game) {
         this.game = game;
     }
+
+    /**
+     * Funkcja wywolywana podczas nacisniecia przycisku New Game
+     */
     public void onNewGamePressed() { }
+
+    /**
+     * Funkcja wywolywana podczas ticku zegara
+     */
     public void onGameTimerTick() { }
+
+    /**
+     * Funkcja zwracajaca aktualny stan rozgrywki
+     * @return aktualny stan rozgrywki
+     */
     public abstract String getGameInfo();
 }
 
+/**
+ * Klasa modelujaca stan zaladowania poziomu
+ */
 class LoadingLevelState extends GameState {
 
+    /**
+     * Konstruktor klasy LoadingLevelState
+     * @param game
+     */
     LoadingLevelState(Game game) {
         super(game);
         game.ui.loadMaze(game.maze.getCurrMaze());
@@ -35,7 +62,14 @@ class LoadingLevelState extends GameState {
     }
 }
 
+/**
+ * Klasa modelujaca stan gotowosci do rozpoczecia gry
+ */
 class ReadyState extends GameState {
+    /**
+     * Konstruktor klasy ReadyState
+     * @param game
+     */
     ReadyState(Game game) {
         super(game);
     }
@@ -50,9 +84,17 @@ class ReadyState extends GameState {
     }
 }
 
+/**
+ * Klasa modelujaca stan, w ktorym gra sie rozpoczela
+ */
 class PlayingState extends GameState {
     final static int TICKS_PER_MOVE = 3;
     private int tickCounter = 0;
+
+    /**
+     * Konstruktor klasy PlayingState
+     * @param game
+     */
     PlayingState(Game game) {
         super(game);
         game.player1.SetActive();
@@ -88,7 +130,14 @@ class PlayingState extends GameState {
     }
 }
 
+/**
+ * Klasa modelujaca stan, w ktorym nie zdolano przejsc poziomu
+ */
 class GameOverState extends GameState {
+    /**
+     * Konstruktor klasy GameOverState
+     * @param game
+     */
     GameOverState(Game game) {
         super(game);
     }
@@ -102,7 +151,14 @@ class GameOverState extends GameState {
     }
 }
 
+/**
+ * Klasa modelujaca stan, w ktorym zdolano przejsc poziom
+ */
 class GameWonState extends  GameState {
+    /**
+     * Konstruktor klasy GameWonState
+     * @param game
+     */
     GameWonState(Game game) {
         super(game);
         if(game.maze.isHighScore(game.timeRemaining))
@@ -119,14 +175,36 @@ class GameWonState extends  GameState {
     }
 }
 
+/**
+ * Klasa modelujaca rozgrywke
+ */
 public class Game implements ActionListener, KeyEventListener, MenuEventListener {
+    /**
+     *
+     */
     Maze maze;
     private GameState currState;
+    /**
+     *
+     */
     UI ui;
+    /**
+     *
+     */
     Player player1;
+    /**
+     *
+     */
     Player player2;
+    /**
+     *
+     */
     int timeRemaining;
 
+    /**
+     * Konstruktor klasy Game
+     * @param ui interfejs graficzny
+     */
     Game(UI ui){
         this.maze = new Maze();
         this.ui = ui;
@@ -136,6 +214,11 @@ public class Game implements ActionListener, KeyEventListener, MenuEventListener
         this.currState = new LoadingLevelState(this);
 
     }
+
+    /**
+     * Funkcja zmieniajaca stan rozgrywki
+     * @param state stan rozgrywki
+     */
     public void changeGameState(GameState state) { this.currState = state; }
 
     @Override
