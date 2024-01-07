@@ -62,7 +62,7 @@ abstract class MazeLevels {
  * Klasa modelujaca pierwszy poziom gry
  */
 final class MazeLevelOne extends MazeLevels {
-    final static int TIME_LIMIT = 10000;
+    final static int TIME_LIMIT = 5000;
     final static int[][] MAZE ={
             {1,1,1,1,1,1,1,1,0,0},
             {0,1,0,0,1,0,0,1,0,0},
@@ -173,7 +173,7 @@ final class MazeLevelTwo extends MazeLevels {
  * Klasa modelujaca trzeci poziom gry
  */
 final class MazeLevelThree extends MazeLevels {
-    final static int TIME_LIMIT = 15000;
+    final static int TIME_LIMIT = 10000;
     final static int[][] MAZE ={
             {1,1,1,0,1,1,1,1,0,1,1,0,1,1,1},
             {1,0,1,0,1,0,0,1,0,1,0,0,1,0,1},
